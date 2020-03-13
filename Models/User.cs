@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Models
 {
-    public class User: IdentityUser
+    public class User: IdentityUser<int>
     {
         public string Name { get; set; }
         public DateTime DOB { get; set; }
