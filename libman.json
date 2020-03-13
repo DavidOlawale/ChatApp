@@ -1,12 +1,12 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
+  "defaultDestination": "wwwroot/js/",
   "libraries": [
     {
       "library": "microsoft-signalr@3.1.2",
-      "destination": "wwwroot/js/",
       "files": [ "signalr.min.js" ],
-      "provider": "unpkg"
+      "provider": "cdnjs"
     }
   ]
 }
