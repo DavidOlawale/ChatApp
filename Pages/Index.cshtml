@@ -4,7 +4,48 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="row">
+        <div class="col-md-8 offset-md-2 col-10 offset-1">
+            <h1 class="text-center">Chat with group</h1>
+            <div class="form-group">
+                <input type="text" placeholder="Enter your name" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Enter your message" class="form-control" id="message">
+            </div>
+            <div class="form-group">
+                <button class="form-control" id="send">Send</button>
+            </div>
+            <ul class="list-group mt-4" id="messages">
+            </ul>
+        </div>
+    </div>
+
+<script src="~/js/signalr.min.js"></script>
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/chatHub")
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
+
+    document.getElementById('send').onclick = () => {
+        let name = document.getElementById('name')
+        let message = document.getElementById('message')
+        connection.invoke('SendMessage', name.value, message.value)
+        message.value = ''
+    }
+
+    connection.on('ReceiveMessage', (name, message) => {
+        let messageNode = document.createElement('li')
+        let content = document.createTextNode(`${name}:  ${message}`)
+        messageNode.appendChild(content)
+
+        document.getElementById('messages').appendChild(messageNode)
+
+    })
+
+    connection.start().then(function () {
+        console.log("connected");
+    });
+</script>
