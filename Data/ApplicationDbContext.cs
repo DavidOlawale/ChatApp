@@ -11,10 +11,10 @@ namespace ChatApp.Data
 {
     public class ApplicationDbContext: IdentityDbContext<User, IdentityRole<int>, int>
     {
-        public ApplicationDbContext(DbContextOptions options): base(options)
-        {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
+        { }
+        
 
-        }
         public DbSet<Message> Messages { get; set; }
     }
 }
